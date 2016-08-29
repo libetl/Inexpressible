@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" 
+    codebase="http://libe.toile-libre.org/puzzle/inexpressible" 
+    href="inexpressible.jnlp">
+    <information>
+        <title>Inexpressible expression</title>
+        <vendor>LiBe</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.5+"
+              href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="inexpressible.jar" main="true" />
+
+    </resources>
+    <application-desc
+         name="Inexpressible expression"
+         main-class="org.toilelibre.libe.inexpressible.SwingInterface"
+         width="664"
+         height="429">
+     </application-desc>
+     <update check="background"/>
+</jnlp>
+ 
