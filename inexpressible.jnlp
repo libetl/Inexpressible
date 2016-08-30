@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jnlp spec="1.0+" 
-    codebase="http://libe.toile-libre.org/puzzle/inexpressible" 
-    href="inexpressible.jnlp">
+    codebase="http://libe.toile-libre.org/puzzle/findlowestone/=" 
+    href="findlowestone.jnlp">
     <information>
         <title>Inexpressible expression</title>
         <vendor>LiBe</vendor>
