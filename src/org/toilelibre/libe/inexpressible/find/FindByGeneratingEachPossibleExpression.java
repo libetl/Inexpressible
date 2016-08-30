@@ -15,6 +15,7 @@ public class FindByGeneratingEachPossibleExpression implements IFind {
 
     private final String ops = "+-*/";
 
+    @Override
     public List<String> find (final int digit, final int numTerms, final Observer... observers) {
         final Map<Integer, String> equations = new HashMap<Integer, String> ();
 
@@ -29,19 +30,18 @@ public class FindByGeneratingEachPossibleExpression implements IFind {
         for (int i = 0; i < loops; i++) {
             equations.putAll (this.loopWithBrackets (digit, numTerms, i, loops, 1, 0, brackets, observers));
         }
-        return new ArrayList<String> (
-                keepStrictlyIncreasingValues(equations));
+        return new ArrayList<String> (this.keepStrictlyIncreasingValues (equations));
     }
 
-    private List<String> keepStrictlyIncreasingValues (Map<Integer, String> equations) {
-        List<String> result = new ArrayList<String> ();
-        
+    private List<String> keepStrictlyIncreasingValues (final Map<Integer, String> equations) {
+        final List<String> result = new ArrayList<String> ();
+
         int i = 0;
         while (equations.containsKey (i)) {
             result.add (equations.get (i));
             i++;
         }
-        
+
         return result;
     }
 
@@ -89,7 +89,7 @@ public class FindByGeneratingEachPossibleExpression implements IFind {
 
         final Node n = Expression.buildTree (myExpr);
         final double val = Expression.valueOfTree (n);
-        return Collections.singletonMap (Integer.valueOf ((int)val), thisExpression ((int) val + " = " + myExpr, observers));
+        return Collections.singletonMap (Integer.valueOf ((int) val), this.thisExpression ((int) val + " = " + myExpr, observers));
     }
 
     private char takeOp (final int numTerms, final int i, final int k, final int loops) {
@@ -105,8 +105,8 @@ public class FindByGeneratingEachPossibleExpression implements IFind {
         return result;
     }
 
-    private String thisExpression (String expression, Observer... observers) {
-        for (Observer observer : observers) {
+    private String thisExpression (final String expression, final Observer... observers) {
+        for (final Observer observer : observers) {
             observer.update (null, expression);
         }
         return expression;

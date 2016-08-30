@@ -31,40 +31,46 @@ import org.toilelibre.libe.inexpressible.find.IFind;
 import org.toilelibre.libe.inexpressible.find.StubFind;
 
 public class SwingInterface {
-    
+
     private static class JListUpdater implements Observer {
 
-        public void update (Observable o, Object arg) {
-            ((DefaultListModel<String>)list.getModel ()).addElement (arg.toString ());
+        @Override
+        public void update (final Observable o, final Object arg) {
+            ((DefaultListModel<String>) SwingInterface.list.getModel ()).addElement (arg.toString ());
         }
-        
+
     }
 
-    @SuppressWarnings ("serial")
     private static class SwingAction extends AbstractAction {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = -3196082895403331701L;
+
         public SwingAction () {
-            putValue (Action.NAME, "SwingAction");
-            putValue (Action.SHORT_DESCRIPTION, "Some short description");
+            this.putValue (Action.NAME, "SwingAction");
+            this.putValue (Action.SHORT_DESCRIPTION, "Some short description");
         }
 
+        @Override
         public void actionPerformed (final ActionEvent e) {
-            final int digit = (Integer) spinnerDigit.getValue ();
-            final int numTerms = (Integer) spinnerNumTerms.getValue ();
+            final int digit = (Integer) SwingInterface.spinnerDigit.getValue ();
+            final int numTerms = (Integer) SwingInterface.spinnerNumTerms.getValue ();
             IFind finder = new StubFind ();
-            list.setModel (new DefaultListModel<String> ());
-            if (rdbtnFindAnExpression.isSelected ()) {
+            SwingInterface.list.setModel (new DefaultListModel<String> ());
+            if (SwingInterface.rdbtnFindAnExpression.isSelected ()) {
                 finder = new FindByStrategies ();
-            } else if (rdbtnGenerateEachPossible.isSelected ()) {
+            } else if (SwingInterface.rdbtnGenerateEachPossible.isSelected ()) {
                 finder = new FindByGeneratingEachPossibleExpression ();
             }
             final IFind theFinder = finder;
             new Thread () {
                 @Override
                 public void run () {
-                    lblResult.setText ("Result : ?");
-                    final List<String> found = theFinder.find (digit, numTerms, new JListUpdater());
-                    lblResult.setText ("Result : " + found.size ());
+                    SwingInterface.lblResult.setText ("Result : ?");
+                    final List<String> found = theFinder.find (digit, numTerms, new JListUpdater ());
+                    SwingInterface.lblResult.setText ("Result : " + found.size ());
                 }
             }.start ();
         }
@@ -75,8 +81,9 @@ public class SwingInterface {
      */
     public static void main (final String [] args) {
         EventQueue.invokeLater (new Runnable () {
+            @Override
             public void run () {
-                startGUI();
+                SwingInterface.startGUI ();
             }
         });
     }
@@ -95,9 +102,9 @@ public class SwingInterface {
      */
     private SwingInterface () {
     }
-    
-    public static void startGUI() {
-        JFrame frame = new JFrame ();
+
+    public static void startGUI () {
+        final JFrame frame = new JFrame ();
         frame.setVisible (true);
         frame.setTitle ("Lowest integer without combination");
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
@@ -121,16 +128,16 @@ public class SwingInterface {
         final JLabel lblNumber = new JLabel ("Number :");
         panel.add (lblNumber);
 
-        spinnerDigit = new JSpinner ();
-        panel.add (spinnerDigit);
-        spinnerDigit.setModel (new SpinnerNumberModel (new Integer (9), new Integer (1), null, new Integer (1)));
+        SwingInterface.spinnerDigit = new JSpinner ();
+        panel.add (SwingInterface.spinnerDigit);
+        SwingInterface.spinnerDigit.setModel (new SpinnerNumberModel (new Integer (9), new Integer (1), null, new Integer (1)));
 
         final JLabel lblNewLabel = new JLabel ("Terms");
         panel.add (lblNewLabel);
 
-        spinnerNumTerms = new JSpinner ();
-        spinnerNumTerms.setModel (new SpinnerNumberModel (new Integer (9), new Integer (1), null, new Integer (1)));
-        panel.add (spinnerNumTerms);
+        SwingInterface.spinnerNumTerms = new JSpinner ();
+        SwingInterface.spinnerNumTerms.setModel (new SpinnerNumberModel (new Integer (9), new Integer (1), null, new Integer (1)));
+        panel.add (SwingInterface.spinnerNumTerms);
 
         final JLabel lblMethod = new JLabel ("Method");
         panel.add (lblMethod);
@@ -141,14 +148,14 @@ public class SwingInterface {
 
         final ButtonGroup btnGroup = new ButtonGroup ();
 
-        rdbtnGenerateEachPossible = new JRadioButton ("Generate each possible expression");
-        btnGroup.add (rdbtnGenerateEachPossible);
-        panel1.add (rdbtnGenerateEachPossible);
+        SwingInterface.rdbtnGenerateEachPossible = new JRadioButton ("Generate each possible expression");
+        btnGroup.add (SwingInterface.rdbtnGenerateEachPossible);
+        panel1.add (SwingInterface.rdbtnGenerateEachPossible);
 
-        rdbtnFindAnExpression = new JRadioButton ("Find an expression for each integer from 0");
-        rdbtnFindAnExpression.setSelected (true);
-        btnGroup.add (rdbtnFindAnExpression);
-        panel1.add (rdbtnFindAnExpression);
+        SwingInterface.rdbtnFindAnExpression = new JRadioButton ("Find an expression for each integer from 0");
+        SwingInterface.rdbtnFindAnExpression.setSelected (true);
+        btnGroup.add (SwingInterface.rdbtnFindAnExpression);
+        panel1.add (SwingInterface.rdbtnFindAnExpression);
 
         final JLabel lblNewLabel1 = new JLabel ("Start");
         panel.add (lblNewLabel1);
@@ -157,9 +164,9 @@ public class SwingInterface {
         btnNewButton.addActionListener (new SwingAction ());
         panel.add (btnNewButton);
 
-        list = new JList<String> ();
-        list.setAutoscrolls (true);
-        final JScrollPane scrollPane = new JScrollPane (list, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        SwingInterface.list = new JList<String> ();
+        SwingInterface.list.setAutoscrolls (true);
+        final JScrollPane scrollPane = new JScrollPane (SwingInterface.list, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setAutoscrolls (true);
 
         final JPanel panel3 = new JPanel ();
@@ -169,8 +176,8 @@ public class SwingInterface {
         final JPanel panel4 = new JPanel ();
         contentPane.add (panel4);
 
-        lblResult = new JLabel ("Result : ?");
-        panel4.add (lblResult);
+        SwingInterface.lblResult = new JLabel ("Result : ?");
+        panel4.add (SwingInterface.lblResult);
 
     }
 }

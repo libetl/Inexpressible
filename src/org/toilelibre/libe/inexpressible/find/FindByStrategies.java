@@ -18,6 +18,7 @@ public class FindByStrategies implements IFind {
     public FindByStrategies () {
     }
 
+    @Override
     public List<String> find (final int digit, final int numTerms, final Observer... observers) {
         final List<Strategy> firstStrategies = this.strategies ("" + digit);
         boolean found = false;
@@ -28,7 +29,7 @@ public class FindByStrategies implements IFind {
             if (res.foundADigitNotEqualsTo (digit)) {
                 found = true;
             } else {
-                equations.add (thisExpression (i + " = " + res.toString (), observers));
+                equations.add (this.thisExpression (i + " = " + res.toString (), observers));
                 i++;
             }
         }
@@ -65,8 +66,8 @@ public class FindByStrategies implements IFind {
         final List<Strategy> strategies = new ArrayList<Strategy> ();
         strategies.add (new Strategy (n.replaceAll ("n", n)));// N
         strategies.add (new Strategy ("n * n / n".replaceAll ("n", n)));// N
-                                                                  // coût
-                                                                  // 3
+        // coût
+        // 3
         strategies.add (new Strategy ("n / n".replaceAll ("n", n)));// 1
         strategies.add (new Strategy ("n - n".replaceAll ("n", n)));// 0
         strategies.add (new Strategy ("(n - n)  / n".replaceAll ("n", n)));// 0
@@ -82,17 +83,17 @@ public class FindByStrategies implements IFind {
         strategies.add (new Strategy ("(n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 7
         strategies.add (new Strategy ("(n + n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 8
         strategies.add (new Strategy ("n - (n - n )".replaceAll ("n", n)));// n
-                                                                         // coût
-                                                                         // 3
+                                                                           // coût
+                                                                           // 3
         strategies.add (new Strategy ("( n - (n - n )) / n".replaceAll ("n", n)));// 1
-                                                                                       // coût
-                                                                                       // 4
+                                                                                  // coût
+                                                                                  // 4
         strategies.add (new Strategy ("n * (n - n)".replaceAll ("n", n)));// 0
-                                                                         // coût
-                                                                         // 3
+                                                                          // coût
+                                                                          // 3
         strategies.add (new Strategy ("n * n * (n - n)".replaceAll ("n", n)));// 0
-                                                                                     // coût
-                                                                                     // 4
+                                                                              // coût
+                                                                              // 4
         return strategies;
     }
 
@@ -121,8 +122,8 @@ public class FindByStrategies implements IFind {
         return bestSolutions;
     }
 
-    private String thisExpression (String expression, Observer... observers) {
-        for (Observer observer : observers) {
+    private String thisExpression (final String expression, final Observer... observers) {
+        for (final Observer observer : observers) {
             observer.update (null, expression);
         }
         return expression;

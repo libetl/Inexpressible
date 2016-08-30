@@ -6,6 +6,7 @@ import java.util.Observer;
 
 public class StubFind implements IFind {
 
+    @Override
     public List<String> find (final int digit, final int numTerms, final Observer... observer) {
         return Collections.emptyList ();
     }

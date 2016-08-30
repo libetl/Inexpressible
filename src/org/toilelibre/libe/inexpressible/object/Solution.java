@@ -24,7 +24,7 @@ public class Solution {
     public Strategy getS () {
         return this.s;
     }
-    
+
     @Override
     public String toString () {
         return this.op + " your number with " + this.s.getNode () + "\nCost :" + this.s.getCost () + "\nRemaining : " + this.remaining + "\n";
