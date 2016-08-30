@@ -16,7 +16,7 @@ public class App {
     
     public static void main (String [] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         if (args.length != 3) {
-            System.out.println ("usage : strategy digit exprlength");
+            System.out.println ("args : (FindByGeneratingEachPossibleExpression|FindByStrategies) digit exprlength");
             return;
         }
         

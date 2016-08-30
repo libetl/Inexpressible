@@ -33,8 +33,8 @@ public class Node implements Cloneable {
         return (this.letter.matches ("[0-9]+") ? 1 : 0) + (this.left == null ? 0 : this.left.countDigits ()) + (this.right == null ? 0 : this.right.countDigits ());
     }
 
-    public boolean foundADigitNotEqualsToDigit (final int digit) {
-        return ((this.letter.matches ("-?[0-9]+") && !("" + digit).equals (this.letter)) || ((this.left != null) && this.left.foundADigitNotEqualsToDigit (digit)) || ((this.right != null) && this.right.foundADigitNotEqualsToDigit (digit)));
+    public boolean foundADigitNotEqualsTo (final int digit) {
+        return ((this.letter.matches ("-?[0-9]+") && !("" + digit).equals (this.letter)) || ((this.left != null) && this.left.foundADigitNotEqualsTo (digit)) || ((this.right != null) && this.right.foundADigitNotEqualsTo (digit)));
     }
 
     public final Node getLeft () {

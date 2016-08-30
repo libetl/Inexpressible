@@ -1,6 +1,7 @@
 package org.toilelibre.libe.inexpressible.find;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class FindByStrategies implements IFind {
         int i = 0;
         while (!found) {
             final Node res = this.findAnExpressionFor (firstStrategies, new Node ("" + i), digit, numTerms);
-            if (res.foundADigitNotEqualsToDigit (digit)) {
+            if (res.foundADigitNotEqualsTo (digit)) {
                 found = true;
             } else {
                 equations.add (thisExpression (i + " = " + res.toString (), observers));
@@ -35,7 +36,7 @@ public class FindByStrategies implements IFind {
     }
 
     private Node findAnExpressionFor (final List<Strategy> strategies, final Node n, final int digit, final int maxCost) {
-        final List<Solution> bestOnes = this.orderSolutions (strategies, Integer.parseInt (n.getLetter ()), maxCost);
+        final List<Solution> bestOnes = this.orderSolutions (Collections.unmodifiableList (strategies), Integer.parseInt (n.getLetter ()), maxCost);
         final Node result = new Node (n.getLetter ());
         final Iterator<Solution> itS = bestOnes.iterator ();
         boolean found = false;
@@ -54,7 +55,7 @@ public class FindByStrategies implements IFind {
                 result.setLetter ("" + solution.op);
                 result.setRight (solution.s.getNode ());
                 result.setLeft (this.findAnExpressionFor (strategies, new Node ("" + solution.remaining), digit, maxCost - solution.s.getCost ()));
-                found |= ((result.countDigits () <= maxCost) && !result.foundADigitNotEqualsToDigit (digit) && (!("" + digit).equals (result.getLeft ().toString ()) || ((maxCost - solution.s.getCost ()) == 1)));
+                found |= ((result.countDigits () <= maxCost) && !result.foundADigitNotEqualsTo (digit) && (!("" + digit).equals (result.getLeft ().toString ()) || ((maxCost - solution.s.getCost ()) == 1)));
             }
         }
         return result;
@@ -73,20 +74,20 @@ public class FindByStrategies implements IFind {
         // 3
         strategies.add (new Strategy ("n * n".replaceAll ("n", n)));// N^2
         strategies.add (new Strategy ("n + n".replaceAll ("n", n)));// 2*N
-        strategies.add (new Strategy ("( n + n ) /  n".replaceAll ("n", n)));// 2
-        strategies.add (new Strategy ("( n + n + n ) /  n".replaceAll ("n", n)));// 3
-        strategies.add (new Strategy ("( n + n + n + n ) /  n".replaceAll ("n", n)));// 4
-        strategies.add (new Strategy ("( n + n + n + n + n ) /  n".replaceAll ("n", n)));// 5
-        strategies.add (new Strategy ("( n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 6
-        strategies.add (new Strategy ("( n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 7
-        strategies.add (new Strategy ("( n + n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 8
-        strategies.add (new Strategy ("n - ( n - n )".replaceAll ("n", n)));// n
+        strategies.add (new Strategy ("(n + n ) /  n".replaceAll ("n", n)));// 2
+        strategies.add (new Strategy ("(n + n + n ) /  n".replaceAll ("n", n)));// 3
+        strategies.add (new Strategy ("(n + n + n + n ) /  n".replaceAll ("n", n)));// 4
+        strategies.add (new Strategy ("(n + n + n + n + n ) /  n".replaceAll ("n", n)));// 5
+        strategies.add (new Strategy ("(n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 6
+        strategies.add (new Strategy ("(n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 7
+        strategies.add (new Strategy ("(n + n + n + n + n + n + n + n ) /  n".replaceAll ("n", n)));// 8
+        strategies.add (new Strategy ("n - (n - n )".replaceAll ("n", n)));// n
                                                                          // coût
                                                                          // 3
-        strategies.add (new Strategy ("( n - ( n - n )) / n".replaceAll ("n", n)));// 1
+        strategies.add (new Strategy ("( n - (n - n )) / n".replaceAll ("n", n)));// 1
                                                                                        // coût
                                                                                        // 4
-        strategies.add (new Strategy ("n * ( n - n )".replaceAll ("n", n)));// 0
+        strategies.add (new Strategy ("n * (n - n)".replaceAll ("n", n)));// 0
                                                                          // coût
                                                                          // 3
         strategies.add (new Strategy ("n * n * (n - n)".replaceAll ("n", n)));// 0
