@@ -1,4 +1,7 @@
 # Inexpressible
+
+[![capture](inexpressible.png)]
+
 Which sum cannot be expressed with x terms of value 'y' ?
 
 Output sent with `App FindByStrategies 9 9`
