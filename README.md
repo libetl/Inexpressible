@@ -1,6 +1,6 @@
 # Inexpressible
 
-[![capture](inexpressible.png)]
+![capture](inexpressible.png)
 
 Which sum cannot be expressed with x terms of value 'y' ?
 
